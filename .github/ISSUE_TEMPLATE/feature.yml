@@ -1,0 +1,9 @@
+name: Propozycja
+description: Propozycja poprawy jakości lub działania projektu.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem i proponowana zmiana
+    validations:
+      required: true

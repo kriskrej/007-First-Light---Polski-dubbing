@@ -1,0 +1,21 @@
+{
+  "repositories": [
+    {
+      "url": "https://github.com/teogsxr/007-first-light-italian-dub",
+      "commit": "04896264e87b37e17637bb2e2ae0348a66639c9a"
+    },
+    {
+      "url": "https://github.com/derx05/gaming-007FirstLight-toolbox",
+      "commit": "bba21551493da9e1877c93782be437e46a29c323"
+    },
+    {
+      "url": "https://github.com/7akeem0/007-firstlight-toolkit",
+      "commit": "ee8d6790b9f9f459687496229658235bffd13f4e"
+    },
+    {
+      "url": "https://github.com/glacier-modding/Bond-Hashes",
+      "commit": "5999e0d463757f6666578f7175e5d1a22021abca"
+    }
+  ],
+  "note": "Pinned source references; third-party repositories and binaries are acquired separately and remain outside this repository."
+}

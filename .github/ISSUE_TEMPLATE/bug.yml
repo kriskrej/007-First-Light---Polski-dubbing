@@ -1,0 +1,23 @@
+name: Błąd
+description: Problem z działaniem, dźwiękiem, napisami lub instalacją.
+body:
+  - type: markdown
+    attributes:
+      value: "Nie dołączaj kluczy, pełnych plików gry ani prywatnych zapisów."
+  - type: input
+    id: versions
+    attributes:
+      label: Wersja moda i build gry
+    validations:
+      required: true
+  - type: input
+    id: scene
+    attributes:
+      label: Rozdział i checkpoint
+  - type: textarea
+    id: steps
+    attributes:
+      label: Kroki odtworzenia i wynik
+      description: Podaj oczekiwane i rzeczywiste zachowanie.
+    validations:
+      required: true

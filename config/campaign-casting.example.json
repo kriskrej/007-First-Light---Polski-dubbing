@@ -1,0 +1,13 @@
+{
+  "model_id": "YOUR_VERIFIED_MODEL_ID",
+  "settings": {
+    "stability": 0.5
+  },
+  "speakers": {
+    "BOND": {
+      "voice_id": "YOUR_VERIFIED_VOICE_ID",
+      "voice_name": "Your licensed voice",
+      "direction": "Reviewed Polish delivery for this character."
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "no_plan_purchase": true,
+  "no_automatic_topup_changes": true,
+  "working_value_limit_pln": 0,
+  "pricing_usd_per_1000": 0.08,
+  "usd_pln_mid": 4.0,
+  "tax_assumed": 0.23,
+  "max_versions_per_resource": 3,
+  "generation_hold": "Paid generation disabled in the example; configure a reviewed budget before enabling.",
+  "foreign_language_policy": "preserve_actual_foreign_speech"
+}

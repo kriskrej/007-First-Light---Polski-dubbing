@@ -1,0 +1,156 @@
+{
+  "snapshot_date": "2026-10-17",
+  "author": "Kris Krej",
+  "target_platform": "Windows / Steam",
+  "public_audio_release_available": false,
+  "ready_audio": 14071,
+  "ready_captioned_audio": 13983,
+  "known_captioned_audio": 27792,
+  "additional_captionless_audio": 88,
+  "ready_captioned_percent": 50.313,
+  "runtime_confirmed_audio": 1,
+  "lipsync_fix_runtime_confirmed": false,
+  "chapters": [
+    {
+      "number": 1,
+      "title": "Against the Odds",
+      "mapped_total": 588,
+      "ready_polish": 566,
+      "preserved_original": 22,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 2,
+      "title": "In His Majesty’s Secret Service",
+      "mapped_total": 141,
+      "ready_polish": 141,
+      "preserved_original": 0,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 3,
+      "title": "The Needle’s Eye",
+      "mapped_total": 324,
+      "ready_polish": 317,
+      "preserved_original": 7,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 4,
+      "title": "The Heart of the Matter",
+      "mapped_total": 331,
+      "ready_polish": 331,
+      "preserved_original": 0,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 5,
+      "title": "A New Home",
+      "mapped_total": 570,
+      "ready_polish": 564,
+      "preserved_original": 6,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 6,
+      "title": "A Night Out",
+      "mapped_total": 547,
+      "ready_polish": 547,
+      "preserved_original": 0,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 7,
+      "title": "A Matter of Considerable Delicacy",
+      "mapped_total": 555,
+      "ready_polish": 551,
+      "preserved_original": 4,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 8,
+      "title": "All the Time in the World",
+      "mapped_total": 963,
+      "ready_polish": 951,
+      "preserved_original": 11,
+      "processed_percent": 99.896
+    },
+    {
+      "number": 9,
+      "title": "Out of the Ashes",
+      "mapped_total": 400,
+      "ready_polish": 400,
+      "preserved_original": 0,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 10,
+      "title": "The Past Never Dies",
+      "mapped_total": 1886,
+      "ready_polish": 1876,
+      "preserved_original": 10,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 11,
+      "title": "Uninvited",
+      "mapped_total": 1170,
+      "ready_polish": 1165,
+      "preserved_original": 5,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 12,
+      "title": "Knightfall",
+      "mapped_total": 853,
+      "ready_polish": 849,
+      "preserved_original": 4,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 13,
+      "title": "Going Old School",
+      "mapped_total": 117,
+      "ready_polish": 116,
+      "preserved_original": 1,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 14,
+      "title": "Time to Die",
+      "mapped_total": 1631,
+      "ready_polish": 1623,
+      "preserved_original": 8,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 15,
+      "title": "Man of the Hour",
+      "mapped_total": 294,
+      "ready_polish": 293,
+      "preserved_original": 1,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 16,
+      "title": "Wave of the Future",
+      "mapped_total": 877,
+      "ready_polish": 876,
+      "preserved_original": 1,
+      "processed_percent": 100.0
+    },
+    {
+      "number": 17,
+      "title": "For England",
+      "mapped_total": 380,
+      "ready_polish": 375,
+      "preserved_original": 5,
+      "processed_percent": 100.0
+    }
+  ],
+  "shared_npc": {
+    "known_captioned_audio": 15745,
+    "ready_polish": 2045,
+    "polish_percent": 12.988
+  }
+}
