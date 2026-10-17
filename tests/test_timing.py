@@ -46,6 +46,7 @@ class TimingTests(unittest.TestCase):
             source = array('h', [1000] * 2000)
             with patch('dub007.timing.ROOT', root), \
                  patch('dub007.timing.load_take', return_value=(source, 'AB', [0, .5], [.2, 1.16])), \
+                 patch('dub007.timing.ffmpeg', return_value='mock-ffmpeg'), \
                  patch('dub007.timing.subprocess.run') as convert:
                 def stretch(arguments, **kwargs):
                     # Deterministic duration correction; no speech samples removed.

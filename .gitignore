@@ -6,6 +6,7 @@
 !/LICENSE
 !/pyproject.toml
 !/requirements.txt
+!/requirements-dev.txt
 !/*.ps1
 !/dub007/
 !/dub007/*.py

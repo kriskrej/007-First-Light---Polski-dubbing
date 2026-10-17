@@ -11,3 +11,5 @@ Copies of the available upstream notices are included in `licenses/`:
 These licenses concern the upstream code and documentation. They do not license the game, extracted data, voice models or generated audio. Other tools are separately acquired dependencies rather than bundled software. Recheck their license and notice requirements before distributing any binaries.
 
 Python packages are pinned in `requirements.txt`. Any packaged distribution must retain the licenses of dependencies it actually bundles.
+
+`requirements-dev.txt` additionally pins **imageio-ffmpeg 0.6.0** (imageio contributors, BSD-2-Clause wrapper) for test environments. Its platform wheel supplies an FFmpeg executable with separate upstream licensing. These downloaded binaries stay outside Git and are not part of the mod release. Review the relevant binary build's notices before any future redistribution.
