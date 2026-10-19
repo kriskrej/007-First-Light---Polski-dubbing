@@ -44,7 +44,8 @@ def main():
                 errors.append(f"{label}: {name}")
     if args.history:
         for address in git("log", "--all", "--format=%ae%n%ce").decode().splitlines():
-            if not address.endswith("@users.noreply.github.com"):
+            # GitHub signs automated/web commits with its own private address.
+            if not (address.endswith("@users.noreply.github.com") or address == "noreply@github.com"):
                 errors.append("A reachable commit exposes a non-noreply email address")
     if errors:
         for error in sorted(set(errors)):

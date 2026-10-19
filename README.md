@@ -24,10 +24,10 @@ Nagranie prezentuje dubbing w grze z lokalnej wersji rozwojowej projektu. Public
 
 | Pomiar lokalnej wersji — 2026-10-19 | Wynik |
 |---|---:|
-| Gotowe polskie nagrania | 19 554 |
+| Gotowe polskie nagrania | 20 609 |
 | Lokalnie zainstalowane polskie nagrania | 18 051 |
-| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 64,472% |
-| Dodatkowe gotowe nagrania bez pierwotnych napisów | 1 636 |
+| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 64,738% |
+| Dodatkowe gotowe nagrania bez pierwotnych napisów | 2 617 |
 | Procent ukończenia całej gry | W trakcie ustalania |
 | Docelowa platforma | Windows / Steam |
 
