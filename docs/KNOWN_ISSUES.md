@@ -1,14 +1,14 @@
 # Znane problemy
 
-## Lipsync: biuro M → laboratorium Q
+## Lipsync: rozmowa z Q — poprawka potwierdzona
 
-Zgłoszono okresowe zanikanie animacji ust w Out of the Ashes. Kolejność markerów cue/LIST w WEM została poprawiona zgodnie z oryginałami. Ostatni lokalny audyt objął 14 071 WEM i 5365 DLGE: brak markerów za data, brak zmian EN/FaceFX i brak brakujących zależności twarzy.
+Zgłoszono okresowe zanikanie animacji ust w Out of the Ashes. Kolejność markerów cue/LIST w WEM została poprawiona zgodnie z oryginałami. Ostatni lokalny audyt objął 18 051 WEM i 5913 DLGE: brak markerów za data, brak zmian EN/FaceFX i brak brakujących zależności twarzy.
 
-Skuteczność tej poprawki dla zgłoszonego objawu wymaga nadal rzeczywistego testu całego przejścia M → Q. Nie oznaczamy go jako rozwiązanego na podstawie samych testów plików.
+19.10.2026 użytkownik potwierdził w grze: „Usta działają przez całą rozmowę z Q”. Zgłoszony problem w rozmowie w laboratorium uznajemy za naprawiony w testowanej wersji. Pozostałe cutscenki wymagają dalszych testów; to potwierdzenie nie obejmuje całej gry.
 
 ## Pokrycie
 
-Wspólne reakcje NPC są częściowo gotowe. Zmapowane sceny fabularne nie obejmują automatycznie całej zawartości rozdziału podczas rozgrywki. Jedna wypowiedź słuchawkowa w All the Time in the World pozostaje nierozpoznana i zachowana w oryginale.
+Wspólne reakcje NPC są częściowo gotowe. Trwa również przegląd dodatkowego korpusu bez oryginalnych napisów; pełny procent gry nie jest jeszcze znany. Zmapowane sceny fabularne nie obejmują automatycznie całej zawartości rozdziału podczas rozgrywki. Wypowiedź słuchawkowa Cressidy w All the Time in the World została po ręcznym odsłuchu rozpoznana jako celowo niezrozumiała. Oryginalne tło radiowe pozostaje zachowane; nie liczymy go jako polskiego dubbingu.
 
 ## Jakość
 

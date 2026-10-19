@@ -15,7 +15,8 @@ def library_scene_key(row, configuration):
             or row.get("native_audio_label") != expected
             or row["line_id"] not in configuration.get("source_dlge_hashes", [])):
         raise ValueError("Native library resource is outside its reviewed evidence")
-    match = re.fullmatch(r"(.+)_" + re.escape(row["speaker_id"].lower()) + r"_(\d{3})(?:_alt\d+)?", expected)
+    match = re.fullmatch(r"(.+)_" + re.escape(row["speaker_id"].lower())
+                         + r"_(\d{3})(?:_alt\d+)?(?:_(?:combat|regular|stealth)_?)?", expected)
     if not match:
         raise ValueError("Unreviewed native library label")
     return 0, match[1], int(match[2]), row["audio_hash_en"]
@@ -23,6 +24,35 @@ def library_scene_key(row, configuration):
 
 def validate_library_owners(index, configuration):
     from .archive import refs
+    chains = configuration.get('source_reference_chains')
+    if chains is not None:
+        required = set(configuration.get('source_dlge_hashes', []))
+        if not required or not isinstance(chains, list) or not chains:
+            raise ValueError('Native library requires explicit resource reference chains')
+        covered, owners = set(), set()
+        for chain in chains:
+            if (not isinstance(chain, list) or len(chain) not in (2, 3)
+                    or any(not isinstance(node, dict) or not node.get('hash') for node in chain)
+                    or [node.get('type') for node in chain] not in
+                    (['TEMP', 'DLGE'], ['TEMP', 'SDEF', 'DLGE'])
+                    or len({node['hash'] for node in chain}) != len(chain)
+                    or chain[-1]['hash'] not in required):
+                raise ValueError('Unsupported native library reference chain')
+            entries = []
+            for node in chain:
+                matches = index.execute('SELECT * FROM resources WHERE hash=? AND type=?',
+                                        (node['hash'], node['type'])).fetchall()
+                if len(matches) != 1:
+                    raise ValueError('Native reference chain resource is missing or ambiguous')
+                entries.append(matches[0])
+            for parent, child in zip(entries, chain[1:]):
+                if child['hash'] not in {ref['hash'] for ref in refs(parent)}:
+                    raise ValueError('Native resource reference chain has changed')
+            covered.add(chain[-1]['hash'])
+            owners.add(chain[0]['hash'])
+        if covered != required:
+            raise ValueError('Native reference chains do not cover all reviewed dialogue')
+        return sorted(owners)
     owners = configuration.get('owner_temp_hashes') or [configuration.get('owner_temp_hash')]
     if not owners or any(not h for h in owners) or len(set(owners)) != len(owners):
         raise ValueError('Native library requires explicit unique TEMP owners')

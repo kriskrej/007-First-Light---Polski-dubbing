@@ -40,6 +40,57 @@ class NativeLibraryTests(unittest.TestCase):
         changed={**self.configuration,'reviewed_native_labels':{**self.configuration['reviewed_native_labels'],'missing':'another_bond_001'}}
         self.assertFalse(complete_library_manifest({'rows':[completed]},'scope',changed))
 
+    def test_delivery_variant_uses_its_exact_reviewed_label(self):
+        for mode in ('combat', 'regular', 'stealth_'):
+            row = {**self.row, 'native_audio_label': self.row['native_audio_label'] + '_' + mode}
+            config = {**self.configuration, 'reviewed_native_labels': {'audio': row['native_audio_label']}}
+            self.assertEqual(library_scene_key(row, config), (0, 'bondspeakingnew_tracephone', 3, 'audio'))
+            with self.assertRaises(ValueError):
+                library_scene_key(row, self.configuration)
+        row = {**self.row, 'native_audio_label': self.row['native_audio_label'] + '_unknown'}
+        config = {**self.configuration, 'reviewed_native_labels': {'audio': row['native_audio_label']}}
+        with self.assertRaises(ValueError):
+            library_scene_key(row, config)
+
+    def test_sound_definition_chain_requires_every_actual_reference(self):
+        db = sqlite3.connect(':memory:')
+        self.addCleanup(db.close)
+        db.row_factory = sqlite3.Row
+        db.execute('CREATE TABLE resources(hash TEXT,type TEXT,refs BLOB)')
+        raw = lambda h: struct.pack('<I', 1) + b'\x5f' + struct.pack('<Q', int(h, 16))
+        owner, sound, dialogue = [format(i, '016X') for i in (1, 2, 3)]
+        db.executemany('INSERT INTO resources VALUES(?,?,?)',
+                       [(owner, 'TEMP', raw(sound)), (sound, 'SDEF', raw(dialogue)), (dialogue, 'DLGE', b'')])
+        chain = [{'hash': owner, 'type': 'TEMP'}, {'hash': sound, 'type': 'SDEF'},
+                 {'hash': dialogue, 'type': 'DLGE'}]
+        config = {'source_dlge_hashes': [dialogue], 'source_reference_chains': [chain]}
+        self.assertEqual(validate_library_owners(db, config), [owner])
+        db.execute('UPDATE resources SET refs=? WHERE hash=?', (raw('4'), sound))
+        with self.assertRaisesRegex(ValueError, 'chain has changed'):
+            validate_library_owners(db, config)
+        db.execute('UPDATE resources SET refs=? WHERE hash=?', (raw(dialogue), sound))
+        db.execute('DELETE FROM resources WHERE hash=?', (dialogue,))
+        with self.assertRaisesRegex(ValueError, 'missing or ambiguous'):
+            validate_library_owners(db, config)
+
+    def test_reference_chain_rejects_wrong_types_cycles_and_partial_coverage(self):
+        db = sqlite3.connect(':memory:')
+        self.addCleanup(db.close)
+        db.row_factory = sqlite3.Row
+        db.execute('CREATE TABLE resources(hash TEXT,type TEXT,refs BLOB)')
+        raw = struct.pack('<I', 1) + b'\x5f' + struct.pack('<Q', 2)
+        db.executemany('INSERT INTO resources VALUES(?,?,?)',
+                       [('0000000000000001', 'TEMP', raw), ('0000000000000002', 'DLGE', b'')])
+        owner = {'hash': '0000000000000001', 'type': 'TEMP'}
+        child = {'hash': '0000000000000002', 'type': 'DLGE'}
+        config = {'source_dlge_hashes': [child['hash']], 'source_reference_chains': [[owner, child]]}
+        self.assertEqual(validate_library_owners(db, config), [owner['hash']])
+        for chain in ([owner, owner], [owner, {**child, 'type': 'WWES'}], []):
+            with self.subTest(chain=chain), self.assertRaisesRegex(ValueError, 'Unsupported'):
+                validate_library_owners(db, {**config, 'source_reference_chains': [chain]})
+        with self.assertRaisesRegex(ValueError, 'cover all'):
+            validate_library_owners(db, {**config, 'source_dlge_hashes': [child['hash'], 'other']})
+
     def test_multiple_owners_require_every_dialogue_reference(self):
         db = sqlite3.connect(':memory:')
         db.row_factory = sqlite3.Row

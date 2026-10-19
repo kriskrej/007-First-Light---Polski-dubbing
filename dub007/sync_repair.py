@@ -134,7 +134,7 @@ def repair():
             if profile["original_markers"] != row["original_markers"]:
                 raise ValueError("Marker repair changed marker bytes")
             decoded = folder / f"{h}.wav"
-            subprocess.run([str(ROOT / "research/vgmstream-win64/vgmstream-cli.exe"), "-o", str(decoded), str(output)],
+            subprocess.run([str(ROOT / "research/vgmstream-win64/vgmstream-cli.exe"), "-i", "-o", str(decoded), str(output)],
                            capture_output=True, check=True)
             with wave.open(str(decoded), "rb") as wav:
                 expected = row["final_audio_qa"]["metadata"]
@@ -144,7 +144,7 @@ def repair():
                 pcm = wav.readframes(wav.getnframes())
             old_wav = source.with_suffix(".wav")
             if not old_wav.exists():
-                subprocess.run([str(ROOT / "research/vgmstream-win64/vgmstream-cli.exe"), "-o", str(old_wav), str(source)],
+                subprocess.run([str(ROOT / "research/vgmstream-win64/vgmstream-cli.exe"), "-i", "-o", str(old_wav), str(source)],
                                capture_output=True, check=True)
             with wave.open(str(old_wav), "rb") as wav:
                 if wav.readframes(wav.getnframes()) != pcm:

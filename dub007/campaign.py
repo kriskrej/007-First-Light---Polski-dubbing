@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 import re
 import subprocess
+import wave
 
 from .audio import prepare_campaign as fit_audio, encode, read_wav
 from .common import ARTIFACTS, ROOT, save_json, sha256
@@ -196,12 +197,26 @@ def initialize():
 def original_wav(row):
     wav = ARTIFACTS / "campaign" / "originals" / f"{row['audio_hash_en']}.wav"
     wav.parent.mkdir(parents=True, exist_ok=True)
-    if not wav.exists():
+    expected = (row['sample_rate'], row['channels'], row['sample_count'], 2)
+    def profile(path):
+        with wave.open(str(path), 'rb') as stream:
+            return stream.getframerate(), stream.getnchannels(), stream.getnframes(), stream.getsampwidth()
+    try:
+        cache_valid = profile(wav) == expected
+    except (OSError, EOFError, wave.Error):
+        cache_valid = False
+    if not cache_valid:
         vgm = ROOT / "research/vgmstream-win64/vgmstream-cli.exe"
         original = ROOT / row["original_wem_path"]
         if sha256(original.read_bytes()) != row["original_payload_sha256"]:
             raise ValueError("Original WEM checksum changed")
-        subprocess.run([str(vgm), "-o", str(wav), str(original)], capture_output=True, check=True)
+        decoded = wav.with_suffix('.decode-once.wav')
+        # smpl describes runtime looping; offline analysis needs one physical stream.
+        subprocess.run([str(vgm), "-i", "-o", str(decoded), str(original)], capture_output=True, check=True)
+        if profile(decoded) != expected:
+            raise ValueError(f"Original decoder profile mismatch for {row['audio_hash_en']}: {profile(decoded)} != {expected}")
+        decoded.replace(wav)
+        row['original_decode_policy'] = 'Physical stream once; vgmstream -i; original loop markers retained in WEM'
     if row["channels"] != 1:
         from .surround import original_profile
         original_profile(row, wav)

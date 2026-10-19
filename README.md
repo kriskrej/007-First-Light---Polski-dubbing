@@ -12,18 +12,26 @@ Projekt i opracowanie: **Kris Krej**
 
 Projekt ma umożliwić przejście całej gry z polskimi głosami i tekstem. Korzysta z oficjalnych polskich napisów dostępnych w grze; brakujące lub wymagające adaptacji kwestie są opracowywane z angielskiego oryginału. Głosy są syntetyzowane przy użyciu ElevenLabs.
 
+## Próbka dubbingu w grze
+
+[▶ Obejrzyj próbkę polskiego dubbingu w 007 First Light na YouTube](https://www.youtube.com/watch?v=F9PckKLI7JM)
+
+Nagranie prezentuje dubbing w grze z lokalnej wersji rozwojowej projektu. Publiczna paczka dla graczy jest w przygotowaniu.
+
 ## Stan projektu
 
 **Trwa przygotowanie pierwszego publicznego wydania testowego.** Repozytorium zawiera kod narzędzi i dokumentację. Gotowa paczka dla graczy zostanie udostępniona osobno w Releases po zakończeniu przygotowań i sprawdzeniu uprawnień do dystrybucji.
 
-| Pomiar lokalnej wersji — 17.10.2026 | Wynik |
+| Pomiar lokalnej wersji — 2026-10-19 | Wynik |
 |---|---:|
-| Gotowe i lokalnie zainstalowane polskie nagrania | 14 071 |
-| Pokrycie znanego korpusu nagrań z tekstem | 50,313% |
-| Dodatkowe nagrania odzyskane bez pierwotnych napisów | 88 |
+| Gotowe polskie nagrania | 19 554 |
+| Lokalnie zainstalowane polskie nagrania | 18 051 |
+| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 64,472% |
+| Dodatkowe gotowe nagrania bez pierwotnych napisów | 1 636 |
+| Procent ukończenia całej gry | W trakcie ustalania |
 | Docelowa platforma | Windows / Steam |
 
-Procent oznacza unikalne nagrania, a nie czas rozgrywki. Ukończenie zmapowanych scen fabularnych nie obejmuje automatycznie wspólnych reakcji postaci. Kontrola techniczna plików i potwierdzenie działania w grze są raportowane oddzielnie. Szczegóły: [stan i pokrycie](docs/STATUS.md).
+Procent z tabeli dotyczy 27 792 znanych nagrań z tekstem. Osobny audyt wykrył 55 041 dodatkowych kandydatów bez napisów: mowę, odgłosy i powtórzenia trzeba jeszcze rozdzielić. **Nie jest to procent ukończenia całej gry ani czasu rozgrywki.** Ukończenie zmapowanych scen fabularnych nie obejmuje automatycznie wspólnych reakcji postaci. Kontrola techniczna plików i potwierdzenie działania w grze są raportowane oddzielnie. Szczegóły: [stan i pokrycie](docs/STATUS.md).
 
 ## Dla graczy
 

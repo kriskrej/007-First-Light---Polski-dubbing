@@ -119,7 +119,7 @@ def roundtrip():
     restore_markers(output, row["original_markers"], before["sample_count"])
     measured = metadata(vgm, output)
     decoded = output.with_suffix(".wav")
-    subprocess.run([str(vgm), "-o", str(decoded), str(output)], capture_output=True, check=True)
+    subprocess.run([str(vgm), "-i", "-o", str(decoded), str(output)], capture_output=True, check=True)
     with wave.open(str(decoded), "rb") as stream:
         if (stream.getframerate(), stream.getnchannels(), stream.getnframes()) != (
                 row["sample_rate"], row["channels"], row["sample_count"]):

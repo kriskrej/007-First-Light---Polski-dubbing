@@ -135,7 +135,7 @@ def run():
             if (profile["sample_rate"], profile["channels"]) != (measured["sample_rate"], measured["channels"]):
                 raise ValueError("RIFF and decoder metadata disagree")
             if not wav.exists() or not wem_unchanged:
-                subprocess.run([str(vgmstream), "-o", str(wav), str(wem)], check=True, capture_output=True)
+                subprocess.run([str(vgmstream), "-i", "-o", str(wav), str(wem)], check=True, capture_output=True)
             with wave.open(str(wav), "rb") as stream:
                 if (stream.getframerate(), stream.getnchannels(), stream.getnframes(), stream.getsampwidth()) != (
                         measured["sample_rate"], measured["channels"], measured["sample_count"], 2):

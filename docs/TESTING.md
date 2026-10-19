@@ -16,6 +16,6 @@ Zapisuj build gry, wersję paczki, checkpoint, kroki i wynik. Krótki klip może
 
 ## Zakres dotychczasowej walidacji
 
-Lokalna wersja produkcyjna ma kontrolę plików, instalacji i rollbacku oraz zestaw testów automatycznych. Użytkownik potwierdził pierwsze polskie słowa w grze. Pozostałe sceny i poprawka lipsync nie mają jeszcze pełnego potwierdzenia runtime.
+Lokalna wersja produkcyjna ma kontrolę plików, instalacji i rollbacku oraz zestaw testów automatycznych. Użytkownik potwierdził pierwsze polskie słowa w grze. 19.10.2026 użytkownik potwierdził po poprawce markerów działanie ust przez całą rozmowę z Q w laboratorium w Out of the Ashes. Pozostałe sceny wymagają dalszych testów w grze.
 
-Publiczny zestaw testów syntetycznych jest uruchamiany niezależnie od prywatnych danych. Kontrola z 17.10.2026 na Windows / Python 3.11: **96 testów, wynik OK, 5 testów wymagających plików gry pominiętych**. Ten sam zestaw w lokalnym workspace produkcyjnym przeszedł wszystkie 96 testów bez pominięć. Wynik testów kodu nie stanowi testu przejścia gry.
+Publiczny zestaw testów syntetycznych jest uruchamiany niezależnie od prywatnych danych. Kontrola z 19.10.2026 na Windows / Python 3.11: **116 testów, wynik OK, 5 testów wymagających plików gry pominiętych**. Ten sam zestaw w lokalnym workspace produkcyjnym przeszedł wszystkie 116 testów bez pominięć. Wynik testów kodu nie stanowi testu przejścia gry.

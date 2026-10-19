@@ -7,7 +7,7 @@ import shutil
 import subprocess
 import wave
 
-from .common import ROOT
+from .common import ROOT, sha256
 from .encoding import convert, restore_markers
 from .selection import metadata, riff_metadata
 
@@ -249,10 +249,53 @@ def prepare_campaign(row, generated):
         return prepared
 
 
+def verify_original_spans(row, prepared):
+    """Prove preserved foreign/nonverbal PCM survives Polish fitting exactly."""
+    prefix_seconds = row.get('preserve_original_prefix_until', 0)
+    preserved = set(row.get('preserve_original_segment_indices', []))
+    if not prefix_seconds and not preserved:
+        return None
+    rate, original = read_wav(ROOT / row['original_wav_path'])
+    final_rate, final = read_wav(prepared)
+    if rate != final_rate or rate != row['sample_rate']:
+        raise ValueError('Preserved original audio sample rate changed')
+    ranges = []
+    if prefix_seconds:
+        count = round(prefix_seconds * rate)
+        if not 0 < count < len(original):
+            raise ValueError('Invalid preserved original prefix')
+        ranges.append((0, count))
+    if preserved:
+        segments = row.get('segments_pl', [])
+        targets = [round(float(segment['timing_raw'].split(',')[0]) * rate) for segment in segments]
+        if targets != sorted(set(targets)) or any(not 0 <= start < len(original) for start in targets):
+            raise ValueError('Invalid preserved original segment boundaries')
+        for index in sorted(preserved):
+            if not isinstance(index, int) or not 0 <= index < len(targets):
+                raise ValueError('Invalid preserved original segment index')
+            ranges.append((targets[index], targets[index + 1] if index + 1 < len(targets) else len(original)))
+    for start, end in ranges:
+        if end > len(final) or final[start:end] != original[start:end]:
+            raise ValueError('Original-language PCM changed during Polish fitting')
+    report = {'status':'original_pcm_identical_before_encoding', 'sample_rate':rate,
+              'preserved_sample_ranges':[list(pair) for pair in ranges],
+              'prepared_wav_sha256':sha256(prepared.read_bytes())}
+    row['preserved_original_audio_qa'] = report
+    return report
+
+
 def encode(row, prepared, output_directory=None):
+    verify_original_spans(row, prepared)
     final_count = target_samples(row)
     output = (output_directory or ROOT / "artifacts" / "poc" / "final") / f"{row['audio_hash_en']}.wem"
     convert(prepared, output)
+    return validate_encoded(row, output)
+
+
+def validate_encoded(row, output):
+    """Restore this resource's markers and decode its actual output profile."""
+    output = Path(output)
+    final_count = target_samples(row)
     vgm = ROOT / "research" / "vgmstream-win64" / "vgmstream-cli.exe"
     before = metadata(vgm, output)
     if (before["sample_rate"], before["channels"], before["sample_count"]) != (
@@ -261,7 +304,7 @@ def encode(row, prepared, output_directory=None):
     restore_markers(output, row["original_markers"], before["sample_count"])
     after = metadata(vgm, output)
     decoded = output.with_suffix(".wav")
-    subprocess.run([str(vgm), "-o", str(decoded), str(output)], check=True, capture_output=True)
+    subprocess.run([str(vgm), "-i", "-o", str(decoded), str(output)], check=True, capture_output=True)
     if row["channels"] == 1:
         rate, final = read_wav(decoded)
     else:

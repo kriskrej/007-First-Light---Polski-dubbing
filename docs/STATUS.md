@@ -1,12 +1,14 @@
 # Stan projektu
 
-Migawka lokalnej produkcji: **17.10.2026**. Autor: **Kris Krej**.
+Migawka lokalnej produkcji: **2026-10-19**. Autor: **Kris Krej**.
 
-Gotowe 14 071 polskich nagrań, w tym 13 983 / 27 792 znanych audio z napisami (**50,313%**) oraz 88 dodatkowych bez pierwotnego napisu. Publiczna paczka audio jest w przygotowaniu.
+Gotowe **19 554** polskich nagrań; lokalnie zainstalowane **18 051**. Gotowy dubbing obejmuje **17 918 / 27 792** znanych nagrań z oryginalnym tekstem (**64,472%**) oraz **1 636** dodatkowych nagrań bez pierwotnych napisów. Publiczna paczka audio jest w przygotowaniu.
 
-Poniższe procenty obejmują rozpoznane zakresy fabularne, gotowe PL i celowo zachowane oryginały. Nie oznaczają pełnego pokrycia wspólnych reakcji NPC ani potwierdzenia wszystkich scen w grze.
+**Procent ukończenia całej gry pozostaje nieustalony.** Osobny audyt wykrył **55 041 kandydatów bez jakiegokolwiek tekstu EN/PL/source**. Wymagają klasyfikacji: część to mowa, część odgłosy i powtórzenia. Ta liczba nie jest liczbą brakujących kwestii do płatnej generacji. Wcześniejszy procent oparty wyłącznie na 27 792 nagraniach z tekstem nie obejmował tego dodatkowego korpusu.
 
-| Nr | Rozdział | PL gotowe | Zachowane oryginały | Zakres | Opracowane |
+Poniższa tabela obejmuje rozpoznane zakresy fabularne, gotowe PL i celowo zachowane oryginały. 100% w tabeli nie oznacza wszystkich reakcji słyszalnych w danym rozdziale ani potwierdzenia całej sceny w grze.
+
+| Nr | Rozdział | PL gotowe | Zachowane oryginały | Zmapowany zakres | Opracowane |
 |---:|---|---:|---:|---:|---:|
 | 1 | Against the Odds | 566 | 22 | 588 | 100.000% |
 | 2 | In His Majesty’s Secret Service | 141 | 0 | 141 | 100.000% |
@@ -15,7 +17,7 @@ Poniższe procenty obejmują rozpoznane zakresy fabularne, gotowe PL i celowo za
 | 5 | A New Home | 564 | 6 | 570 | 100.000% |
 | 6 | A Night Out | 547 | 0 | 547 | 100.000% |
 | 7 | A Matter of Considerable Delicacy | 551 | 4 | 555 | 100.000% |
-| 8 | All the Time in the World | 951 | 11 | 963 | 99.896% |
+| 8 | All the Time in the World | 951 | 12 | 963 | 100.000% |
 | 9 | Out of the Ashes | 400 | 0 | 400 | 100.000% |
 | 10 | The Past Never Dies | 1876 | 10 | 1886 | 100.000% |
 | 11 | Uninvited | 1165 | 5 | 1170 | 100.000% |
@@ -26,8 +28,8 @@ Poniższe procenty obejmują rozpoznane zakresy fabularne, gotowe PL i celowo za
 | 16 | Wave of the Future | 876 | 1 | 877 | 100.000% |
 | 17 | For England | 375 | 5 | 380 | 100.000% |
 
-Wspólna biblioteka NPC: **2045 / 15 745 PL — 12,988%**. Centrala i symulator: **252 / 252** gotowe.
+Wspólna biblioteka NPC z oryginalnym tekstem: **5 980 / 15 745 PL — 37,98%**. Dodatkowe kwestie bez napisów są liczone osobno.
 
-W grze potwierdzono pierwszą polską wypowiedź moda. Ostatni audyt lokalnej instalacji obejmuje 14 071 WEM i 5365 DLGE: zero markerów za data, zero zmian EN/FaceFX, zero brakujących zależności twarzy. Test przejścia M → Q po poprawce pozostaje otwarty.
+W grze potwierdzono pierwszą polską wypowiedź moda. Audyt ostatniej instalacji (2026-10-19) obejmuje **18 051 WEM i 5 913 DLGE**: zero markerów za data, zero zmian EN/FaceFX, zero brakujących zależności twarzy. Po poprawce markerów użytkownik potwierdził 19.10.2026 działanie ust przez całą rozmowę z Q w laboratorium. To potwierdzenie dotyczy zgłoszonego scenariusza, nie wszystkich cutscenek i nagrań.
 
-Pełne wyniki lokalnej produkcji i rozliczenia pozostają prywatne. Publiczne wyniki testów kodu będą widoczne w Actions; wymagane sprawdzenia wydania opisuje [TESTING.md](TESTING.md).
+Pełne wyniki lokalnej produkcji i rozliczenia pozostają prywatne. Publiczne wyniki testów kodu są widoczne w Actions; wymagane sprawdzenia wydania opisuje [TESTING.md](TESTING.md).

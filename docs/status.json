@@ -1,21 +1,29 @@
 {
-  "snapshot_date": "2026-10-17",
+  "snapshot_date": "2026-10-19",
+  "snapshot_utc": "2026-10-19T17:15:31.741558+00:00",
   "author": "Kris Krej",
   "target_platform": "Windows / Steam",
   "public_audio_release_available": false,
-  "ready_audio": 14071,
-  "ready_captioned_audio": 13983,
+  "ready_audio": 19554,
+  "installed_audio": 18051,
+  "ready_captioned_audio": 17918,
   "known_captioned_audio": 27792,
-  "additional_captionless_audio": 88,
-  "ready_captioned_percent": 50.313,
+  "additional_captionless_audio": 1636,
+  "ready_captioned_percent": 64.472,
+  "whole_game_percent": null,
+  "whole_game_percent_note": "Captionless corpus is still being classified; captioned percentage does not measure the whole game.",
+  "additional_captionless_candidates": 55041,
+  "candidate_note": "May contain speech, nonverbal reactions and duplicate recordings; not a count of remaining paid generations.",
   "runtime_confirmed_audio": 1,
-  "lipsync_fix_runtime_confirmed": false,
+  "lipsync_fix_runtime_confirmed": true,
+  "lipsync_runtime_scope": "User confirmed moving mouths throughout the Q laboratory conversation in Out of the Ashes on 2026-10-19; not a whole-game runtime test",
   "chapters": [
     {
       "number": 1,
       "title": "Against the Odds",
       "mapped_total": 588,
       "ready_polish": 566,
+      "installed_polish": 566,
       "preserved_original": 22,
       "processed_percent": 100.0
     },
@@ -24,6 +32,7 @@
       "title": "In His Majesty’s Secret Service",
       "mapped_total": 141,
       "ready_polish": 141,
+      "installed_polish": 141,
       "preserved_original": 0,
       "processed_percent": 100.0
     },
@@ -32,6 +41,7 @@
       "title": "The Needle’s Eye",
       "mapped_total": 324,
       "ready_polish": 317,
+      "installed_polish": 317,
       "preserved_original": 7,
       "processed_percent": 100.0
     },
@@ -40,6 +50,7 @@
       "title": "The Heart of the Matter",
       "mapped_total": 331,
       "ready_polish": 331,
+      "installed_polish": 331,
       "preserved_original": 0,
       "processed_percent": 100.0
     },
@@ -48,6 +59,7 @@
       "title": "A New Home",
       "mapped_total": 570,
       "ready_polish": 564,
+      "installed_polish": 564,
       "preserved_original": 6,
       "processed_percent": 100.0
     },
@@ -56,6 +68,7 @@
       "title": "A Night Out",
       "mapped_total": 547,
       "ready_polish": 547,
+      "installed_polish": 547,
       "preserved_original": 0,
       "processed_percent": 100.0
     },
@@ -64,6 +77,7 @@
       "title": "A Matter of Considerable Delicacy",
       "mapped_total": 555,
       "ready_polish": 551,
+      "installed_polish": 551,
       "preserved_original": 4,
       "processed_percent": 100.0
     },
@@ -72,14 +86,16 @@
       "title": "All the Time in the World",
       "mapped_total": 963,
       "ready_polish": 951,
-      "preserved_original": 11,
-      "processed_percent": 99.896
+      "installed_polish": 951,
+      "preserved_original": 12,
+      "processed_percent": 100.0
     },
     {
       "number": 9,
       "title": "Out of the Ashes",
       "mapped_total": 400,
       "ready_polish": 400,
+      "installed_polish": 400,
       "preserved_original": 0,
       "processed_percent": 100.0
     },
@@ -88,6 +104,7 @@
       "title": "The Past Never Dies",
       "mapped_total": 1886,
       "ready_polish": 1876,
+      "installed_polish": 1876,
       "preserved_original": 10,
       "processed_percent": 100.0
     },
@@ -96,6 +113,7 @@
       "title": "Uninvited",
       "mapped_total": 1170,
       "ready_polish": 1165,
+      "installed_polish": 1165,
       "preserved_original": 5,
       "processed_percent": 100.0
     },
@@ -104,6 +122,7 @@
       "title": "Knightfall",
       "mapped_total": 853,
       "ready_polish": 849,
+      "installed_polish": 849,
       "preserved_original": 4,
       "processed_percent": 100.0
     },
@@ -112,6 +131,7 @@
       "title": "Going Old School",
       "mapped_total": 117,
       "ready_polish": 116,
+      "installed_polish": 116,
       "preserved_original": 1,
       "processed_percent": 100.0
     },
@@ -120,6 +140,7 @@
       "title": "Time to Die",
       "mapped_total": 1631,
       "ready_polish": 1623,
+      "installed_polish": 1623,
       "preserved_original": 8,
       "processed_percent": 100.0
     },
@@ -128,6 +149,7 @@
       "title": "Man of the Hour",
       "mapped_total": 294,
       "ready_polish": 293,
+      "installed_polish": 293,
       "preserved_original": 1,
       "processed_percent": 100.0
     },
@@ -136,6 +158,7 @@
       "title": "Wave of the Future",
       "mapped_total": 877,
       "ready_polish": 876,
+      "installed_polish": 876,
       "preserved_original": 1,
       "processed_percent": 100.0
     },
@@ -144,13 +167,25 @@
       "title": "For England",
       "mapped_total": 380,
       "ready_polish": 375,
+      "installed_polish": 375,
       "preserved_original": 5,
       "processed_percent": 100.0
     }
   ],
-  "shared_npc": {
+  "shared_captioned_npc": {
     "known_captioned_audio": 15745,
-    "ready_polish": 2045,
-    "polish_percent": 12.988
+    "ready_polish": 5980,
+    "installed_polish": 5506,
+    "preserved_original": 46,
+    "polish_percent": 37.98
+  },
+  "last_installed_audit": {
+    "checked_utc": "2026-10-19T16:32:28.445425+00:00",
+    "wwes_checked": 18051,
+    "dlge_checked": 5913,
+    "wwes_markers_after_data": 0,
+    "english_facefx_changes": 0,
+    "missing_face_dependencies": 0,
+    "runtime_verified": false
   }
 }

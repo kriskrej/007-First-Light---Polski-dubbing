@@ -33,6 +33,12 @@ python -m dub007 rollback --help
 
 Polecenia dotyczące gry wymagają przygotowanego workspace i danych. `api-check` wykonuje odczyty API; `campaign` może wykonywać płatne żądania dopiero po osobnym skonfigurowaniu i zatwierdzeniu limitów. Szczegóły komend sprawdzaj w `--help`.
 
+`campaign-first-pass --chapter <zakres> --prefetch` przetwarza wyłącznie pierwsze wersje dopuszczonych zasobów oraz zapisane wyniki oczekujące na kodowanie. Oczekiwanie na pojedynczą następną generację może nakładać się na lokalne dopasowanie bieżącego nagrania. Istniejąca blokada TTS, limity przydziału i trwały dziennik pozostają aktywne. Nieudane dopasowanie czasu wymaga osobnego przeglądu; komenda nie kupuje automatycznych kolejnych wersji.
+
+Moduł `dub007.reuse` dopuszcza kopiowanie gotowego polskiego audio pomiędzy zasobami bez napisów po porównaniu całego odkodowanego oryginalnego PCM. Wymaga zgodnego aktora, głosu, modelu, ustawień i profilu źródła, pojedynczego cue w próbce zero oraz braku pętli i zachowanych obcojęzycznych fragmentów. Podobny tekst lub identyczny fragment skompresowanych danych nie wystarcza. Każdy wynik odzyskuje własne markery i przechodzi ponowne dekodowanie; pochodzenie kopii jest zapisywane bez fikcyjnego płatnego żądania.
+
+Analiza plików z `smpl` dekoduje pojedynczy fizyczny przebieg przez `vgmstream -i`, aby ustawienia odsłuchu dekodera nie powtarzały pętli ani nie dopisywały wyciszenia. Markery pętli pozostają w docelowym WEM. Cache o niezgodnym profilu jest zastępowany dopiero po sprawdzeniu sumy źródłowego WEM i dokładnej zgodności nowego WAV.
+
 ## Publikacja
 
 Kod i dokumentacja trafiają do Gita. Gotowe paczki są oddzielnymi załącznikami Releases i wymagają uprzedniego audytu praw oraz zawartości. Historia produkcji, wyodrębnione dialogi, audio, konta, cache i backupy pozostają poza repozytorium.

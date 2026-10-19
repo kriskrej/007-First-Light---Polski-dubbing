@@ -24,6 +24,8 @@ def main():
     campaign.add_argument("--chapter")
     first_pass = commands.add_parser("campaign-first-pass")
     first_pass.add_argument("--chapter", required=True)
+    first_pass.add_argument("--prefetch", action="store_true",
+                            help="Overlap one next TTS request with local fitting; no automatic retakes")
     campaign_install = commands.add_parser("campaign-install")
     campaign_install.add_argument("--dry-run", action="store_true")
     installation = commands.add_parser("install")
@@ -67,7 +69,10 @@ def main():
         elif args.command == "campaign":
             from .campaign import run
         elif args.command == "campaign-first-pass":
-            from .batch import run
+            if args.prefetch:
+                from .bulk import run
+            else:
+                from .batch import run
             print(json.dumps(run(args.chapter), ensure_ascii=False, indent=2))
             return 0
         elif args.command == "campaign-status":
