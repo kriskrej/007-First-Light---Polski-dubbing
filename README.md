@@ -14,7 +14,9 @@ Projekt ma umożliwić przejście całej gry z polskimi głosami i tekstem. Korz
 
 ## Próbka dubbingu w grze
 
-[▶ Obejrzyj próbkę polskiego dubbingu w 007 First Light na YouTube](https://www.youtube.com/watch?v=F9PckKLI7JM)
+https://github.com/user-attachments/assets/d099d0b6-7952-49cb-946b-a754983824b2
+
+[Obejrzyj na YouTube](https://www.youtube.com/watch?v=F9PckKLI7JM)
 
 Nagranie prezentuje dubbing w grze z lokalnej wersji rozwojowej projektu. Publiczna paczka dla graczy jest w przygotowaniu.
 
