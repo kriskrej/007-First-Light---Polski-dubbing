@@ -58,11 +58,23 @@ def scene_key(row):
 
 def database():
     store = CampaignLedger()
-    store.database.execute("CREATE TABLE IF NOT EXISTS resources (audio_hash TEXT PRIMARY KEY, position INTEGER UNIQUE, mission TEXT, scene TEXT, status TEXT, document TEXT)")
-    store.database.execute("CREATE TABLE IF NOT EXISTS state (name TEXT PRIMARY KEY, value TEXT)")
-    store.database.execute("CREATE TABLE IF NOT EXISTS chapter_resources (chapter TEXT, audio_hash TEXT, ordinal INTEGER, PRIMARY KEY(chapter,audio_hash))")
-    with store.database:
-        store.database.execute("INSERT OR IGNORE INTO chapter_resources SELECT mission,audio_hash,position FROM resources")
+    tables = {row[0] for row in store.database.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    if 'resources' not in tables:
+        store.database.execute("CREATE TABLE IF NOT EXISTS resources (audio_hash TEXT PRIMARY KEY, position INTEGER UNIQUE, mission TEXT, scene TEXT, status TEXT, document TEXT)")
+    if 'state' not in tables:
+        store.database.execute("CREATE TABLE IF NOT EXISTS state (name TEXT PRIMARY KEY, value TEXT)")
+    if 'chapter_resources' not in tables:
+        store.database.execute("CREATE TABLE IF NOT EXISTS chapter_resources (chapter TEXT, audio_hash TEXT, ordinal INTEGER, PRIMARY KEY(chapter,audio_hash))")
+    # Older ledgers need their original mission membership backfilled. Normal
+    # opens must stay read-only: even INSERT OR IGNORE with no missing rows
+    # acquires SQLite's sole writer lock and competes with the paid pipeline.
+    missing = store.database.execute(
+        "SELECT 1 FROM resources r WHERE NOT EXISTS "
+        "(SELECT 1 FROM chapter_resources c WHERE c.chapter=r.mission "
+        "AND c.audio_hash=r.audio_hash) LIMIT 1").fetchone()
+    if missing:
+        with store.database:
+            store.database.execute("INSERT OR IGNORE INTO chapter_resources SELECT mission,audio_hash,position FROM resources")
     return store
 
 

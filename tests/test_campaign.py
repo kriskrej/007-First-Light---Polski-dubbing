@@ -1,4 +1,5 @@
 import json
+from contextlib import closing
 from pathlib import Path
 import tempfile
 import unittest
@@ -34,6 +35,50 @@ class CampaignTests(unittest.TestCase):
                 with self.assertRaises(FileNotFoundError):
                     CampaignLedger(path)
             self.assertFalse(path.exists())
+
+    def test_opening_complete_chapter_mapping_does_not_compete_with_another_writer(self):
+        import sqlite3
+        with tempfile.TemporaryDirectory() as folder, closing(CampaignLedger(Path(folder) / 'ledger.sqlite3')) as store:
+            path = store.path
+            with patch('dub007.campaign.CampaignLedger', return_value=store):
+                database()
+            with store.database:
+                store.database.execute('INSERT INTO resources VALUES(?,?,?,?,?,?)',
+                                       ('one', 0, 'chapter', 'scene', 'ready', '{}'))
+                store.database.execute('INSERT INTO chapter_resources VALUES(?,?,?)',
+                                       ('chapter', 'one', 0))
+            store.database.execute('PRAGMA busy_timeout=20')
+            writer = sqlite3.connect(path)
+            try:
+                writer.execute('BEGIN IMMEDIATE')
+                writer.execute("UPDATE resources SET scene='uncommitted' WHERE audio_hash='one'")
+                with closing(CampaignLedger(path)) as independent:
+                    self.assertEqual(independent.usage()['requests'], 0)
+                with patch('dub007.campaign.CampaignLedger', return_value=store):
+                    opened = database()
+                self.assertIs(opened, store)
+                self.assertEqual(store.database.execute('SELECT scene FROM resources').fetchone()[0], 'scene')
+                self.assertEqual(store.database.execute('SELECT COUNT(*) FROM chapter_resources').fetchone()[0], 1)
+            finally:
+                writer.rollback()
+                writer.close()
+
+    def test_legacy_chapter_mapping_is_backfilled_without_replacing_shared_membership(self):
+        with tempfile.TemporaryDirectory() as folder, closing(CampaignLedger(Path(folder) / 'ledger.sqlite3')) as store:
+            with patch('dub007.campaign.CampaignLedger', return_value=store):
+                database()
+            with store.database:
+                store.database.executemany('INSERT INTO resources VALUES(?,?,?,?,?,?)',
+                                          [('one', 0, 'original', 's', 'ready', '{}'),
+                                           ('two', 1, 'legacy', 's', 'ready', '{}')])
+                store.database.executemany('INSERT INTO chapter_resources VALUES(?,?,?)',
+                                          [('original', 'one', 7), ('shared', 'one', 3)])
+            with patch('dub007.campaign.CampaignLedger', return_value=store):
+                database()
+                database()
+            self.assertEqual(store.database.execute(
+                'SELECT chapter,audio_hash,ordinal FROM chapter_resources ORDER BY chapter').fetchall(),
+                [('legacy', 'two', 1), ('original', 'one', 7), ('shared', 'one', 3)])
 
     def test_progress_excludes_recovered_captionless_speech_from_original_caption_denominator(self):
         import sqlite3

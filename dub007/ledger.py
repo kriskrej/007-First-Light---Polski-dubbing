@@ -14,12 +14,19 @@ class CampaignLedger:
         self.policy = json.loads((ROOT / "config" / "campaign.json").read_text(encoding="utf-8"))
         self.path = path or ARTIFACTS / "campaign" / "tts.sqlite3"
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.database = sqlite3.connect(self.path)
+        # Fitting, one prefetched request and read-only progress may briefly
+        # overlap a durable transaction. Wait for it instead of abandoning an
+        # already-paid take after SQLite's five-second default.
+        self.database = sqlite3.connect(self.path, timeout=30)
         self.database.execute("PRAGMA journal_mode=WAL")
         self.database.execute("PRAGMA synchronous=FULL")
-        self.database.execute("CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, audio_hash TEXT, cache_key TEXT, characters INTEGER, status TEXT, document TEXT)")
-        self.database.execute("CREATE INDEX IF NOT EXISTS lookup_audio ON entries(audio_hash)")
-        self.database.execute("CREATE INDEX IF NOT EXISTS lookup_cache ON entries(cache_key)")
+        schema = {row[0] for row in self.database.execute("SELECT name FROM sqlite_master WHERE type IN ('table','index')")}
+        if 'entries' not in schema:
+            self.database.execute("CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, audio_hash TEXT, cache_key TEXT, characters INTEGER, status TEXT, document TEXT)")
+        if 'lookup_audio' not in schema:
+            self.database.execute("CREATE INDEX IF NOT EXISTS lookup_audio ON entries(audio_hash)")
+        if 'lookup_cache' not in schema:
+            self.database.execute("CREATE INDEX IF NOT EXISTS lookup_cache ON entries(cache_key)")
         columns = {row[1] for row in self.database.execute("PRAGMA table_info(entries)")}
         if "account_id" not in columns:
             self.database.execute("ALTER TABLE entries ADD COLUMN account_id TEXT NOT NULL DEFAULT '1'")
