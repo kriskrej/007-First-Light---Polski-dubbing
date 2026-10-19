@@ -2,7 +2,7 @@
 
 Migawka lokalnej produkcji: **2026-10-19**. Autor: **Kris Krej**.
 
-Gotowe **23 056** polskich nagrań; lokalnie zainstalowane **18 051**. Gotowy dubbing obejmuje **18 440 / 27 792** znanych nagrań z oryginalnym tekstem (**66,35%**) oraz **4 616** dodatkowych nagrań bez pierwotnych napisów. Publiczna paczka audio jest w przygotowaniu.
+Gotowe **25 446** polskich nagrań; lokalnie zainstalowane **18 051**. Gotowy dubbing obejmuje **20 248 / 27 792** znanych nagrań z oryginalnym tekstem (**72,855%**) oraz **5 198** dodatkowych nagrań bez pierwotnych napisów. Publiczna paczka audio jest w przygotowaniu.
 
 **Procent ukończenia całej gry pozostaje nieustalony.** Osobny audyt wykrył **55 041 kandydatów bez jakiegokolwiek tekstu EN/PL/source**. Wymagają klasyfikacji: część to mowa, część odgłosy i powtórzenia. Ta liczba nie jest liczbą brakujących kwestii do płatnej generacji. Wcześniejszy procent oparty wyłącznie na 27 792 nagraniach z tekstem nie obejmował tego dodatkowego korpusu.
 
@@ -28,7 +28,7 @@ Poniższa tabela obejmuje rozpoznane zakresy fabularne, gotowe PL i celowo zacho
 | 16 | Wave of the Future | 876 | 1 | 877 | 100.000% |
 | 17 | For England | 375 | 5 | 380 | 100.000% |
 
-Wspólna biblioteka NPC z oryginalnym tekstem: **6 502 / 15 745 PL — 41,296%**. Dodatkowe kwestie bez napisów są liczone osobno.
+Wspólna biblioteka NPC z oryginalnym tekstem: **8 310 / 15 745 PL — 52,779%**. Dodatkowe kwestie bez napisów są liczone osobno.
 
 W grze potwierdzono pierwszą polską wypowiedź moda. Audyt ostatniej instalacji (2026-10-19) obejmuje **18 051 WEM i 5 913 DLGE**: zero markerów za data, zero zmian EN/FaceFX, zero brakujących zależności twarzy. Po poprawce markerów użytkownik potwierdził 19.10.2026 działanie ust przez całą rozmowę z Q w laboratorium. To potwierdzenie dotyczy zgłoszonego scenariusza, nie wszystkich cutscenek i nagrań.
 
