@@ -1,17 +1,17 @@
 {
   "snapshot_date": "2026-10-20",
-  "snapshot_utc": "2026-10-20T02:26:18.631266+00:00",
+  "snapshot_utc": "2026-10-20T03:25:12.613901+00:00",
   "author": "Kris Krej",
   "target_platform": "Windows / Steam",
   "public_audio_release_available": false,
-  "ready_audio": 33987,
+  "ready_audio": 35087,
   "installed_audio": 18051,
-  "ready_captioned_audio": 27340,
+  "ready_captioned_audio": 27494,
   "known_captioned_audio": 27792,
-  "additional_captionless_audio": 6647,
-  "ready_captioned_percent": 98.374,
+  "additional_captionless_audio": 7593,
+  "ready_captioned_percent": 98.928,
   "preserved_captioned_original_audio": 155,
-  "remaining_captioned_audio": 297,
+  "remaining_captioned_audio": 143,
   "whole_game_percent": null,
   "whole_game_percent_note": "Captionless corpus is still being classified; captioned percentage does not measure the whole game.",
   "additional_captionless_candidates": 55041,
@@ -179,10 +179,10 @@
   ],
   "shared_captioned_npc": {
     "known_captioned_audio": 15745,
-    "ready_polish": 15402,
+    "ready_polish": 15556,
     "installed_polish": 5506,
     "preserved_original": 46,
-    "polish_percent": 97.822
+    "polish_percent": 98.8
   },
   "last_installed_audit": {
     "checked_utc": "2026-10-19T16:32:28.445425+00:00",

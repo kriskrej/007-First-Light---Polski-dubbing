@@ -135,10 +135,14 @@ def ensure_chapter(store, chapter, prepared_path=None):
     if prepared["unresolved"]:
         raise ValueError("Chapter has unresolved DLGE mappings")
     rows = sorted(prepared["rows"], key=lambda row: order_key(row, configuration.get("scene_ordering_rules", [])))
+    # Resolving native scenes can read large configuration files. Finish that
+    # work before taking SQLite's sole writer lock, so an encoder can save an
+    # already-paid take while a large chapter is being imported.
+    prepared_rows = [(row, scene_key(row)) for row in rows]
     position = store.database.execute("SELECT COALESCE(MAX(position),-1)+1 FROM resources").fetchone()[0]
     ordinal_start = store.database.execute("SELECT COALESCE(MAX(ordinal),-1)+1 FROM chapter_resources WHERE chapter=?", (chapter,)).fetchone()[0]
     with store.database:
-        for ordinal, row in enumerate(rows, ordinal_start):
+        for ordinal, (row, key) in enumerate(prepared_rows, ordinal_start):
             audio_hash = row["audio_hash_en"]
             existing = store.database.execute("SELECT document FROM resources WHERE audio_hash=?", (audio_hash,)).fetchone()
             if existing:
@@ -149,7 +153,6 @@ def ensure_chapter(store, chapter, prepared_path=None):
                 before["uses"] = list(merged.values())
                 store.database.execute("UPDATE resources SET document=? WHERE audio_hash=?", (json.dumps(before, ensure_ascii=False), audio_hash))
             else:
-                key = scene_key(row)
                 row.update(scene_id=key[1], scene_line_number=key[2], scene_number=key[0],
                            chapter_id=chapter, mission_id=prepared.get("mission_id", configuration["mission_folder"]))
                 if configuration.get("scope_kind") in ("reactive", "native_library"):

@@ -80,6 +80,40 @@ class CampaignTests(unittest.TestCase):
                 'SELECT chapter,audio_hash,ordinal FROM chapter_resources ORDER BY chapter').fetchall(),
                 [('legacy', 'two', 1), ('original', 'one', 7), ('shared', 'one', 3)])
 
+    def test_import_resolves_scenes_before_taking_the_database_writer_lock(self):
+        import sqlite3
+        from dub007.campaign import ensure_chapter
+        with tempfile.TemporaryDirectory() as folder, closing(CampaignLedger(Path(folder) / 'ledger.sqlite3')) as store:
+            with patch('dub007.campaign.CampaignLedger', return_value=store):
+                database()
+            with store.database:
+                store.database.execute('INSERT INTO state VALUES(?,?)', ('writer_probe', 'unchanged'))
+            manifest = Path(folder) / 'manifest.json'
+            rows = [{'audio_hash_en': name, 'speaker_id': 'speaker', 'text_en': 'Hello.',
+                     'text_pl_original': 'Cześć.', 'qa_status': 'original_metadata_verified',
+                     'original_payload_sha256': name, 'uses': [{'line_id': name, 'leaf_index': 0}]}
+                    for name in ('one', 'two', 'three')]
+            save_json(manifest, {'unresolved': [], 'mission_id': 'bulk', 'rows': rows})
+            probes = []
+
+            def resolve(row):
+                # Real second connection models the paid pipeline saving an
+                # already-generated take while scene/configuration I/O runs.
+                with closing(sqlite3.connect(store.path, timeout=.02)) as writer:
+                    with writer:
+                        writer.execute("UPDATE state SET value=value WHERE name='writer_probe'")
+                probes.append(row['audio_hash_en'])
+                return (1, 'scene', 1, row['audio_hash_en'])
+
+            configuration = {'chapters': {'bulk': {'scope_kind': 'native_library', 'mission_folder': 'bulk'}}}
+            with patch('dub007.campaign.chapter_config', return_value=configuration), \
+                 patch('dub007.campaign.scene_key', side_effect=resolve):
+                ensure_chapter(store, 'bulk', prepared_path=manifest)
+            self.assertGreaterEqual(len(probes), len(rows))
+            self.assertEqual(store.database.execute('SELECT COUNT(*) FROM resources').fetchone()[0], 3)
+            self.assertEqual(store.database.execute('SELECT COUNT(*) FROM chapter_resources').fetchone()[0], 3)
+            self.assertEqual(store.database.execute("SELECT value FROM state WHERE name='writer_probe'").fetchone()[0], 'unchanged')
+
     def test_progress_excludes_recovered_captionless_speech_from_original_caption_denominator(self):
         import sqlite3
         from types import SimpleNamespace
