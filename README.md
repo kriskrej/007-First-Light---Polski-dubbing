@@ -24,16 +24,16 @@ Nagranie prezentuje dubbing w grze z lokalnej wersji rozwojowej projektu. Public
 
 **Trwa przygotowanie pierwszego publicznego wydania testowego.** Repozytorium zawiera kod narzędzi i dokumentację. Gotowa paczka dla graczy zostanie udostępniona osobno w Releases po zakończeniu przygotowań i sprawdzeniu uprawnień do dystrybucji.
 
-| Pomiar lokalnej wersji — 2026-10-19 | Wynik |
+| Pomiar lokalnej wersji — 2026-10-20 | Wynik |
 |---|---:|
-| Gotowe polskie nagrania | 30 072 |
+| Gotowe polskie nagrania | 31 774 |
 | Lokalnie zainstalowane polskie nagrania | 18 051 |
-| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 84,485% |
-| Dodatkowe gotowe nagrania bez pierwotnych napisów | 6 592 |
+| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 90,584% |
+| Dodatkowe gotowe nagrania bez pierwotnych napisów | 6 599 |
 | Procent ukończenia całej gry | W trakcie ustalania |
 | Docelowa platforma | Windows / Steam |
 
-Procent z tabeli dotyczy 27 792 znanych nagrań z tekstem. Osobny audyt wykrył 55 041 dodatkowych kandydatów bez napisów: mowę, odgłosy i powtórzenia trzeba jeszcze rozdzielić. **Nie jest to procent ukończenia całej gry ani czasu rozgrywki.** Ukończenie zmapowanych scen fabularnych nie obejmuje automatycznie wspólnych reakcji postaci. Kontrola techniczna plików i potwierdzenie działania w grze są raportowane oddzielnie. Szczegóły: [stan i pokrycie](docs/STATUS.md).
+Procent z tabeli dotyczy 27 792 znanych nagrań z tekstem. Osobny audyt wykrył 55 041 dodatkowych kandydatów bez napisów; dalszy przegląd obejmuje 9 906 rozłącznych odgłosów VOX. Wymagają rozdzielenia mowy, odgłosów i powtórzeń; nie są liczbą brakujących płatnych nagrań. **Nie jest to procent ukończenia całej gry ani czasu rozgrywki.** Ukończenie zmapowanych scen fabularnych nie obejmuje automatycznie wspólnych reakcji postaci. Kontrola techniczna plików i potwierdzenie działania w grze są raportowane oddzielnie. Szczegóły: [stan i pokrycie](docs/STATUS.md).
 
 ## Dla graczy
 
