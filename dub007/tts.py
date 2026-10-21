@@ -73,14 +73,25 @@ def pcm_to_wav(raw, output, rate):
 
 
 def recover(entry, key):
-    query = urllib.parse.urlencode({"page_size": 100, "voice_id": entry["identity"]["voice_id"],
-                                    "model_id": entry["identity"]["request"]["model_id"], "source": "TTS",
+    # Some single-speaker history records expose text/voice only in dialogue.
+    # Server-side voice filtering can hide those records entirely.
+    query = urllib.parse.urlencode({"page_size": 100, "source": "TTS",
                                     "date_after_unix": int(entry["started_unix"]) - 5})
     history = get("/v1/history?" + query, key)
+
+    def identity_matches(item):
+        if entry.get("request_id"):
+            return item.get("request_id") == entry["request_id"]
+        text, voice = item.get("text"), item.get("voice_id")
+        dialogue = item.get("dialogue")
+        if text is None and voice is None and isinstance(dialogue, list) and len(dialogue) == 1:
+            segment = dialogue[0]
+            if isinstance(segment, dict):
+                text, voice = segment.get("text"), segment.get("voice_id")
+        return text == entry["identity"]["request"]["text"] and voice == entry["identity"]["voice_id"]
+
     matches = [item for item in history.get("history", [])
-               if ((entry.get("request_id") and item.get("request_id") == entry["request_id"])
-                   or (item.get("text") == entry["identity"]["request"]["text"]
-                       and item.get("voice_id") == entry["identity"]["voice_id"]))
+               if identity_matches(item)
                and item.get("model_id") == entry["identity"]["request"]["model_id"]
                and abs(item.get("date_unix", 0) - entry["started_unix"]) < 180
                and all(item.get("settings", {}).get(name) == value

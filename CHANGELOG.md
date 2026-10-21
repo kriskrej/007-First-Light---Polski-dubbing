@@ -7,6 +7,7 @@
 - Dziennik instalacji, rollback oraz odzyskiwanie przerwanych operacji.
 - Obsługa oficjalnego PL, wielosegmentowych dialogów i markerów WEM.
 - Wznawialna produkcja z cache i limitami płatnych żądań.
+- Odczyt pojedynczych wypowiedzi zapisanych w polu `dialogue` historii API; zapisany identyfikator żądania ma pierwszeństwo przed podobieństwem tekstu, a niejednoznaczne wyniki pozostają wstrzymane bez ponownej płatnej generacji.
 - Kolejka pierwszych wersji nakłada oczekiwanie na jedną następną generację na lokalne kodowanie, zachowując pojedyncze płatne żądanie naraz.
 - Ponowne wykorzystanie polskiego nagrania po dowodzie identycznego oryginalnego PCM, zgodności aktora i castingu; każdy cel zachowuje własne markery.
 - Kontrola zachowanych fragmentów oryginalnego audio próbka po próbce.

@@ -24,12 +24,12 @@ Nagranie prezentuje dubbing w grze z lokalnej wersji rozwojowej projektu. Public
 
 **Trwa przygotowanie pierwszego publicznego wydania testowego.** Repozytorium zawiera kod narzędzi i dokumentację. Gotowa paczka dla graczy zostanie udostępniona osobno w Releases po zakończeniu przygotowań i sprawdzeniu uprawnień do dystrybucji.
 
-| Pomiar lokalnej wersji — 2026-10-20 | Wynik |
+| Pomiar lokalnej wersji — 2026-10-21 | Wynik |
 |---|---:|
-| Gotowe polskie nagrania | 35 087 |
+| Gotowe polskie nagrania | 36 891 |
 | Lokalnie zainstalowane polskie nagrania | 18 051 |
-| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 98,928% |
-| Dodatkowe gotowe nagrania bez pierwotnych napisów | 7 593 |
+| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 98,96% |
+| Dodatkowe gotowe nagrania bez pierwotnych napisów | 9 388 |
 | Procent ukończenia całej gry | W trakcie ustalania |
 | Docelowa platforma | Windows / Steam |
 

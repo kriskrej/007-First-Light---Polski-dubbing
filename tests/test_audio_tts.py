@@ -195,6 +195,54 @@ class AudioTtsTests(unittest.TestCase):
         with patch("dub007.tts.get", return_value=history):
             self.assertEqual(recover(entry, "test-key"), [])
 
+    def test_single_dialogue_history_matches_full_identity_without_voice_filter(self):
+        now = time.time()
+        entry = {"started_unix": now, "identity": {"voice_id": "voice-one", "request": {
+            "text": "Drabiną w dół.", "model_id": "eleven_v4", "voice_settings": {"stability": 0.5}}}}
+        item = {"request_id": "one", "text": None, "voice_id": None,
+                "dialogue": [{"text": "Drabiną w dół.", "voice_id": "voice-one"}],
+                "model_id": "eleven_v4", "date_unix": int(now), "settings": {"stability": 0.5}}
+        with patch("dub007.tts.get", return_value={"history": [item]}) as get:
+            self.assertEqual(recover(entry, "test-key"), [item])
+            self.assertNotIn("voice_id=", get.call_args.args[0])
+
+    def test_dialogue_recovery_rejects_mismatch_multiple_speakers_and_stale_settings(self):
+        import copy
+        now = time.time()
+        entry = {"started_unix": now, "identity": {"voice_id": "voice-one", "request": {
+            "text": "Test", "model_id": "eleven_v4", "voice_settings": {"stability": 0.5}}}}
+        item = {"text": None, "voice_id": None, "dialogue": [{"text": "Test", "voice_id": "voice-one"}],
+                "model_id": "eleven_v4", "date_unix": int(now), "settings": {"stability": 0.5}}
+        variants = []
+        for field, value in [('text', 'Other text'), ('voice_id', 'other-voice')]:
+            changed = copy.deepcopy(item)
+            changed['dialogue'][0][field] = value
+            variants.append(changed)
+        variants.append({**item, 'dialogue': item['dialogue'] * 2})
+        variants.append({**item, 'date_unix': int(now) - 600})
+        variants.append({**item, 'settings': {'stability': 0.7}})
+        variants.append({**item, 'model_id': 'another-model'})
+        with patch("dub007.tts.get", return_value={"history": variants}):
+            self.assertEqual(recover(entry, "test-key"), [])
+
+    def test_saved_request_id_never_falls_back_to_another_identical_take(self):
+        now = time.time()
+        entry = {"request_id": "expected", "started_unix": now,
+                 "identity": {"voice_id": "voice-one", "request": {"text": "Test", "model_id": "eleven_v4", "voice_settings": {"stability": 0.5}}}}
+        item = {"request_id": "different", "text": "Test", "voice_id": "voice-one",
+                "model_id": "eleven_v4", "date_unix": int(now), "settings": {"stability": 0.5}}
+        with patch("dub007.tts.get", return_value={"history": [item]}):
+            self.assertEqual(recover(entry, "test-key"), [])
+
+    def test_recovery_preserves_ambiguity_between_identical_adjacent_takes(self):
+        now = time.time()
+        entry = {"started_unix": now, "identity": {"voice_id": "voice-one", "request": {
+            "text": "Test", "model_id": "eleven_v4", "voice_settings": {"stability": 0.5}}}}
+        item = {"text": None, "voice_id": None, "dialogue": [{"text": "Test", "voice_id": "voice-one"}],
+                "model_id": "eleven_v4", "date_unix": int(now), "settings": {"stability": 0.5}}
+        with patch("dub007.tts.get", return_value={"history": [{**item, 'request_id': 'one'}, {**item, 'request_id': 'two'}]}):
+            self.assertEqual(len(recover(entry, "test-key")), 2)
+
 
 if __name__ == "__main__":
     unittest.main()
