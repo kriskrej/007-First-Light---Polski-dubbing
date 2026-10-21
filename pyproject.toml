@@ -9,7 +9,7 @@ description = "Tools for the Polish dubbing of 007 First Light"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{name = "Kris Krej"}]
-dependencies = ["lz4==4.4.5", "fonttools==4.60.1"]
+dependencies = ["lz4==4.4.5", "fonttools==4.67.0"]
 
 [tool.setuptools]
 packages = ["dub007"]
