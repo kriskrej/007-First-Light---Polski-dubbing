@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0-rc1 — przygotowanie 2026-10-21
+
+- Instalator odbiorcy odtwarza teksty z lokalnych oryginałów, dobiera wolne patche i używa dziennika z rollbackiem. Ta sama wersja instaluje się jednokrotnie; blokada zapobiega równoległym operacjom.
+- Trwały i atomowy zapis opłaconego WAV przed potwierdzeniem w ledgerze; wcześniejszy plik pozostaje poprawny przy błędzie zapisu.
+- Zawężenie płatnej generacji do jawnej listy zasobów; osobna kontrola pojedynczych, przejrzanych zmian modelu bez automatycznej pętli kolejnych wersji.
+- Domknięcie większości ostatnich dialogów NPC z tekstem; dalsze reakcje bez napisów wyłączone z produkcji.
+
 ## W przygotowaniu — pierwsze wydanie publiczne
 
 - Uporządkowana publikacja kodu narzędzi i dokumentacji.

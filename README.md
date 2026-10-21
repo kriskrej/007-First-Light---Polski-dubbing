@@ -26,14 +26,20 @@ Nagranie prezentuje dubbing w grze z lokalnej wersji rozwojowej projektu. Public
 
 | Pomiar lokalnej wersji — 2026-10-21 | Wynik |
 |---|---:|
-| Gotowe polskie nagrania | 38 158 |
-| Lokalnie zainstalowane polskie nagrania | 18 051 |
-| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 99,028% |
-| Dodatkowe gotowe nagrania bez pierwotnych napisów | 10 636 |
+| Gotowe polskie nagrania | 38 475 |
+| Lokalnie zainstalowane polskie nagrania | 38 475 |
+| Pokrycie znanego korpusu nagrań z oryginalnym tekstem | 99,421% |
+| Dodatkowe gotowe nagrania bez pierwotnych napisów | 10 844 |
+| Pokrycie zakresu dialogów z tekstem wymagających dubbingu | 99,982% |
+| Pozostałe nierozstrzygnięte kwestie w tym zakresie | 5 |
 | Procent ukończenia całej gry | W trakcie ustalania |
 | Docelowa platforma | Windows / Steam |
 
-Procent z tabeli dotyczy 27 792 znanych nagrań z tekstem. Osobny audyt wykrył 55 041 dodatkowych kandydatów bez napisów; dalszy przegląd obejmuje 9 906 rozłącznych odgłosów VOX. Wymagają rozdzielenia mowy, odgłosów i powtórzeń; nie są liczbą brakujących płatnych nagrań. **Nie jest to procent ukończenia całej gry ani czasu rozgrywki.** Ukończenie zmapowanych scen fabularnych nie obejmuje automatycznie wspólnych reakcji postaci. Kontrola techniczna plików i potwierdzenie działania w grze są raportowane oddzielnie. Szczegóły: [stan i pokrycie](docs/STATUS.md).
+W korpusie z tekstem gotowe jest 27 631 polskich nagrań; 156 oryginalnych odgłosów lub wypowiedzi obcojęzycznych zachowano celowo, a pięć krótkich kwestii pozostaje nierozstrzygniętych. Po wyłączeniu zachowanych oryginałów zakres wymagający dubbingu ma **99,982%** pokrycia. To pomiar zasobów, a nie czasu rozgrywki.
+
+Dalsze reakcje bez napisów wyłączono z produkcji na życzenie właściciela projektu. Wcześniej przygotowane 10 844 dodatkowe polskie nagrania pozostają w paczce. Nie deklarujemy zastąpienia każdej reakcji słyszalnej w grze. Szczegóły: [stan](docs/STATUS.md) i [przygotowanie wydania](docs/RELEASE_PUBLICATION.md).
+
+Lokalnie przygotowano **0.9.0-rc1** z samodzielnym instalatorem Windows i rollbackiem. Paczka audio nie została opublikowana. Przed uploadem pozostają potwierdzenia uprawnień opisane w [LEGAL.md](LEGAL.md).
 
 ## Dla graczy
 

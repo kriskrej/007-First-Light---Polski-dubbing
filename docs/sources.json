@@ -17,5 +17,28 @@
       "commit": "5999e0d463757f6666578f7175e5d1a22021abca"
     }
   ],
-  "note": "Pinned source references; third-party repositories and binaries are acquired separately and remain outside this repository."
+  "note": "Pinned source references; third-party repositories and binaries are acquired separately and remain outside this repository.",
+  "release_installer_build": {
+    "python": "3.11.9",
+    "pyinstaller": "6.22.3",
+    "pyinstaller_source": "https://pypi.org/project/pyinstaller/6.22.3/",
+    "pyinstaller_wheel_filename": "pyinstaller-6.22.3-py3-none-win_amd64.whl",
+    "pyinstaller_wheel_sha256": "500bd58c7bf7e584a8435adccbd763a0b918d5c12b08d74ff50fd79b2915458b",
+    "documentation": "https://www.pyinstaller.org/en/stable/",
+    "license": "https://pyinstaller.org/en/v6.22.3/license.html",
+    "bundled_game_resources_in_git": false,
+    "notes": "CPython/lz4/PyInstaller bootloader notices accompany recipient release candidate. pkgdef_codec.py adapted from pinned toolbox source with MIT notice retained.",
+    "runtime_notice_sources": [
+      {
+        "file": "OPENSSL-3.0.13-LICENSE.txt",
+        "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.0.13/LICENSE.txt",
+        "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+      },
+      {
+        "file": "XZ-LIBLZMA-COPYING.txt",
+        "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.4.6/COPYING",
+        "sha256": "29a1e305b2e34eefe5d4602d00cde1d528b71c5d9f2eec5106972cf6ddb6f73f"
+      }
+    ]
+  }
 }

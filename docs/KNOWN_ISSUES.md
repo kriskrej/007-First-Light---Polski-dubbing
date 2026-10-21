@@ -2,7 +2,7 @@
 
 ## Lipsync: rozmowa z Q — poprawka potwierdzona
 
-Zgłoszono okresowe zanikanie animacji ust w Out of the Ashes. Kolejność markerów cue/LIST w WEM została poprawiona zgodnie z oryginałami. Ostatni lokalny audyt objął 18 051 WEM i 5913 DLGE: brak markerów za data, brak zmian EN/FaceFX i brak brakujących zależności twarzy.
+Zgłoszono okresowe zanikanie animacji ust w Out of the Ashes. Kolejność markerów cue/LIST w WEM została poprawiona zgodnie z oryginałami. Ostatni lokalny audyt objął 38 475 WEM i 7829 DLGE: brak markerów za data, brak zmian EN/FaceFX i brak brakujących zależności twarzy.
 
 19.10.2026 użytkownik potwierdził w grze: „Usta działają przez całą rozmowę z Q”. Zgłoszony problem w rozmowie w laboratorium uznajemy za naprawiony w testowanej wersji. Pozostałe cutscenki wymagają dalszych testów; to potwierdzenie nie obejmuje całej gry.
 

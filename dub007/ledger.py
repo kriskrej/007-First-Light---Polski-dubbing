@@ -111,10 +111,17 @@ class CampaignLedger:
         if deadline and datetime.now(timezone.utc) >= datetime.fromisoformat(deadline):
             raise RuntimeError("Overnight work deadline reached; no further paid request")
         audio_hash = identity["audio_hash_en"]
+        allowed_audio = self.policy.get("paid_audio_allowlist")
+        if allowed_audio is not None:
+            if not isinstance(allowed_audio, list) or any(not isinstance(value, str) for value in allowed_audio):
+                raise ValueError("Invalid paid audio allowlist; no paid request")
+            if audio_hash not in allowed_audio:
+                raise RuntimeError("Audio is outside the authorized generation scope; no paid request")
         if self.database.execute("SELECT 1 FROM entries WHERE audio_hash=? AND status IN ('reserved','unknown')", (audio_hash,)).fetchone():
             raise RuntimeError("Unresolved campaign request; no paid retry")
         if (self.database.execute("SELECT COUNT(*) FROM entries WHERE audio_hash=?", (audio_hash,)).fetchone()[0] >= self.policy.get("max_versions_per_resource", 3)
-                and not self.reviewed_casting_correction(identity)):
+                and not self.reviewed_casting_correction(identity)
+                and not self.reviewed_model_timing_correction(identity)):
             raise ValueError("Campaign quality retake limit reached for this resource")
         characters = len(identity["request"]["text"])
         credits = self.required_credits(identity)
@@ -135,6 +142,22 @@ class CampaignLedger:
         with self.database:
             self._insert(entry)
         return entry
+
+    def reviewed_model_timing_correction(self, identity):
+        """One explicit model change after three known successful but unfit takes."""
+        review = self.policy.get('reviewed_model_timing_corrections', {}).get(identity['audio_hash_en'])
+        if not review or review.get('new_model_id') != identity['request'].get('model_id'):
+            return False
+        prior = self.load(identity['audio_hash_en'])['entries']
+        if (review.get('prior_versions') != 3 or review.get('maximum_new_versions') != 1
+                or len(prior) != 3 or not review.get('reason')
+                or identity['request']['model_id'] == review.get('previous_model_id')
+                or identity.get('voice_id') != review.get('voice_id')
+                or any(e['status'] != 'succeeded' or e['identity'].get('voice_id') != review['voice_id']
+                       or e['identity']['request']['model_id'] != review.get('previous_model_id') for e in prior)):
+            return False
+        evidence = ROOT / review['evidence_path']
+        return evidence.is_file() and sha256(evidence.read_bytes()) == review.get('evidence_sha256')
 
     def write(self, ledger):
         with self.database:

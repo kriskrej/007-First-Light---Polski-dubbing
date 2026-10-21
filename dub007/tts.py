@@ -65,11 +65,22 @@ def reserve(ledger, identity):
 def pcm_to_wav(raw, output, rate):
     if not raw or len(raw) % 2:
         raise ValueError("Invalid 16-bit mono PCM response")
-    with wave.open(str(output), "wb") as stream:
-        stream.setnchannels(1)
-        stream.setsampwidth(2)
-        stream.setframerate(rate)
-        stream.writeframes(raw)
+    output = Path(output)
+    temporary = output.with_name(output.name + ".tmp")
+    try:
+        with temporary.open("wb") as file:
+            with wave.open(file, "wb") as stream:
+                stream.setnchannels(1)
+                stream.setsampwidth(2)
+                stream.setframerate(rate)
+                stream.writeframes(raw)
+            # The final WAV header and PCM must reach disk before its ledger
+            # entry can become succeeded; closing wave alone only flushes Python.
+            file.flush()
+            os.fsync(file.fileno())
+        os.replace(temporary, output)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def recover(entry, key):

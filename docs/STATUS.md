@@ -2,7 +2,7 @@
 
 Migawka lokalnej produkcji: **2026-10-21**. Autor: **Kris Krej**.
 
-Gotowe **38 158** polskich nagrań; lokalnie zainstalowane **18 051**. Gotowy dubbing obejmuje **27 522 / 27 792** znanych nagrań z oryginalnym tekstem (**99,028%**) oraz **10 636** dodatkowych nagrań bez pierwotnych napisów. Publiczna paczka audio jest w przygotowaniu.
+Gotowe **38 475** polskich nagrań; lokalnie zainstalowane **38 475**. Gotowy dubbing obejmuje **27 631 / 27 792** znanych nagrań z oryginalnym tekstem (**99,421%**) oraz **10 844** dodatkowych nagrań bez pierwotnych napisów. Lokalny kandydat 0.9.0-rc1 jest przygotowany; audio nie zostało publicznie udostępnione.
 
 **Procent ukończenia całej gry pozostaje nieustalony.** Osobny audyt wykrył **55 041 kandydatów bez jakiegokolwiek tekstu EN/PL/source**. Wymagają klasyfikacji: część to mowa, część odgłosy i powtórzenia. Ta liczba nie jest liczbą brakujących kwestii do płatnej generacji. Wcześniejszy procent oparty wyłącznie na 27 792 nagraniach z tekstem nie obejmował tego dodatkowego korpusu.
 
@@ -30,8 +30,16 @@ Poniższa tabela obejmuje rozpoznane zakresy fabularne, gotowe PL i celowo zacho
 | 16 | Wave of the Future | 876 | 1 | 877 | 100.000% |
 | 17 | For England | 375 | 5 | 380 | 100.000% |
 
-Wspólna biblioteka NPC z oryginalnym tekstem: **15 584 / 15 745 PL — 98,977%**. Dodatkowe kwestie bez napisów są liczone osobno.
+Wspólna biblioteka NPC z oryginalnym tekstem: **15 693 / 15 745 PL — 99,67%**. Dodatkowe kwestie bez napisów są liczone osobno.
 
-W grze potwierdzono pierwszą polską wypowiedź moda. Audyt ostatniej instalacji (2026-10-19) obejmuje **18 051 WEM i 5 913 DLGE**: zero markerów za data, zero zmian EN/FaceFX, zero brakujących zależności twarzy. Po poprawce markerów użytkownik potwierdził 19.10.2026 działanie ust przez całą rozmowę z Q w laboratorium. To potwierdzenie dotyczy zgłoszonego scenariusza, nie wszystkich cutscenek i nagrań.
+W grze potwierdzono pierwszą polską wypowiedź moda. Audyt ostatniej instalacji (2026-10-21) obejmuje **38 475 WEM i 7 829 DLGE**: zero markerów za data, zero zmian EN/FaceFX, zero brakujących zależności twarzy. Po poprawce markerów użytkownik potwierdził 19.10.2026 działanie ust przez całą rozmowę z Q w laboratorium. To potwierdzenie dotyczy zgłoszonego scenariusza, nie wszystkich cutscenek i nagrań.
 
 Pełne wyniki lokalnej produkcji i rozliczenia pozostają prywatne. Publiczne wyniki testów kodu są widoczne w Actions; wymagane sprawdzenia wydania opisuje [TESTING.md](TESTING.md).
+
+## Zakres po korekcie właściciela — 21.10.2026
+
+Dalsze tłumaczenie i generowanie reakcji bez napisów wyłączono. W zakresie dialogów z tekstem wymagających dubbingu gotowe jest **27 631/27 636 (99,982%)**; **5** krótkich kwestii pozostaje w oryginale do rozstrzygnięcia. Zachowane oryginalne odgłosy i obce języki są liczone osobno. Pełnego procentu czasu gry nie wyliczamy z tych liczb.
+
+Samodzielny EXE przeszedł instalację nad istniejącymi patchami, ponowną instalację tej samej paczki bez duplikacji, rollback zachowujący poprzednie pliki i manifest, a także czystą instalację i rollback. Testy wykonywano na kopii manifestu i patchy z dostępem tylko do odczytu do rzeczywistych bazowych archiwów. Nie jest to dodatkowy test działania w silniku gry.
+
+Zestaw obejmuje 133 testy produkcyjne bez pominięć oraz 133 uruchomione z publicznego katalogu, z pięcioma pominiętymi wymagającymi prywatnych zasobów gry. Kandydat dla graczy nie wymaga Pythona, Wwise ani klucza API. [Materiały wydania](RELEASE_PUBLICATION.md) wyjaśniają zakres, instalację i otwarte uprawnienia publikacyjne.

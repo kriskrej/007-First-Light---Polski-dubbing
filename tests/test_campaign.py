@@ -36,6 +36,66 @@ class CampaignTests(unittest.TestCase):
                     CampaignLedger(path)
             self.assertFalse(path.exists())
 
+    def test_scope_change_blocks_unlisted_audio_without_reservation(self):
+        root = Path(self.policy_directory.name)
+        path = root / 'config/campaign.json'
+        policy = json.loads(path.read_text(encoding='utf-8'))
+        policy.update(working_value_limit_pln=100, paid_audio_allowlist=['included'])
+        save_json(path, policy)
+        with closing(CampaignLedger()) as store:
+            identity = {'audio_hash_en': 'included', 'request': {'text': 'Cześć.'}}
+            store.reserve(identity)
+            # An already-open worker must re-read the narrowed scope.
+            policy['paid_audio_allowlist'] = []
+            save_json(path, policy)
+            for audio_hash in ('included', 'excluded'):
+                with self.assertRaisesRegex(RuntimeError, 'authorized generation scope'):
+                    store.reserve({**identity, 'audio_hash_en': audio_hash})
+            self.assertEqual(store.usage()['requests'], 1)
+
+    def test_invalid_generation_scope_never_becomes_unrestricted(self):
+        root = Path(self.policy_directory.name)
+        path = root / 'config/campaign.json'
+        policy = json.loads(path.read_text(encoding='utf-8'))
+        with closing(CampaignLedger()) as store:
+            for invalid in ('included', False, [None]):
+                policy['paid_audio_allowlist'] = invalid
+                save_json(path, policy)
+                with self.assertRaisesRegex(ValueError, 'allowlist'):
+                    store.reserve({'audio_hash_en': 'included', 'request': {'text': 'Cześć.'}})
+            self.assertEqual(store.usage()['requests'], 0)
+
+    def test_one_explicit_model_correction_cannot_become_repeated_retakes(self):
+        from dub007.common import sha256
+        root = Path(self.policy_directory.name)
+        path = root/'config/campaign.json'
+        policy = json.loads(path.read_text(encoding='utf-8'))
+        proof = root/'review.json'
+        proof.write_text('finite reviewed model change', encoding='utf-8')
+        policy.update(working_value_limit_pln=100, reviewed_model_timing_corrections={'one': {
+            'prior_versions':3,'maximum_new_versions':1,'previous_model_id':'old','new_model_id':'new',
+            'voice_id':'voice','reason':'Three known takes fail the duration; one distinct model only.',
+            'evidence_path':'review.json','evidence_sha256':sha256(proof.read_bytes())}})
+        save_json(path,policy)
+        with closing(CampaignLedger()) as store:
+            old={'audio_hash_en':'one','voice_id':'voice','request':{'text':'Hi','model_id':'old'}}
+            for _ in range(3):
+                entry=store.reserve(old)
+                entry['status']='succeeded'
+                store.write({'entries':[entry]})
+            for wrong in ({**old,'voice_id':'other'}, old):
+                self.assertFalse(store.reviewed_model_timing_correction(wrong))
+            changed={**old,'request':{'text':'Hi','model_id':'new'}}
+            self.assertTrue(store.reviewed_model_timing_correction(changed))
+            proof.write_text('tampered review', encoding='utf-8')
+            self.assertFalse(store.reviewed_model_timing_correction(changed))
+            proof.write_text('finite reviewed model change', encoding='utf-8')
+            entry=store.reserve(changed)
+            entry['status']='succeeded'
+            store.write({'entries':[entry]})
+            with self.assertRaisesRegex(ValueError,'retake limit'):
+                store.reserve(changed)
+
     def test_opening_complete_chapter_mapping_does_not_compete_with_another_writer(self):
         import sqlite3
         with tempfile.TemporaryDirectory() as folder, closing(CampaignLedger(Path(folder) / 'ledger.sqlite3')) as store:

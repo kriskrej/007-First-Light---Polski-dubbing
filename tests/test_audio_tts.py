@@ -144,6 +144,30 @@ class AudioTtsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "additional version"):
             reserve(ledger, self.identity("0"))
 
+    def test_pcm_sync_failure_preserves_previous_cached_audio(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'raw.wav'
+            pcm_to_wav(b'\x01\x00' * 2400, output, 24000)
+            previous = output.read_bytes()
+            with patch('dub007.tts.os.fsync', side_effect=OSError('disk flush failed')):
+                with self.assertRaisesRegex(OSError, 'disk flush failed'):
+                    pcm_to_wav(b'\x02\x00' * 4800, output, 24000)
+            self.assertEqual(output.read_bytes(), previous)
+            self.assertEqual(list(Path(directory).iterdir()), [output])
+
+    def test_pcm_replace_failure_leaves_previous_valid_audio(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'raw.wav'
+            pcm_to_wav(b'\x01\x00' * 2400, output, 24000)
+            previous = output.read_bytes()
+            with patch('dub007.tts.os.replace', side_effect=PermissionError('file in use')):
+                with self.assertRaisesRegex(PermissionError, 'file in use'):
+                    pcm_to_wav(b'\x02\x00' * 4800, output, 24000)
+            self.assertEqual(output.read_bytes(), previous)
+            with wave.open(str(output), 'rb') as stream:
+                self.assertEqual(stream.readframes(2400), b'\x01\x00' * 2400)
+            self.assertEqual(list(Path(directory).iterdir()), [output])
+
     def test_pcm_is_wrapped_as_real_wav(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "raw.wav"

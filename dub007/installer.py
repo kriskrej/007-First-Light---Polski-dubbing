@@ -28,7 +28,7 @@ def durable_bytes(path, data):
 
 
 def checked_definition(data):
-    codec = upstream("pkgdef")
+    from . import pkgdef_codec as codec
     header, crc, plain = codec.decrypt(data)
     if crc != zlib.crc32(plain) or codec.encrypt(header, plain) != data:
         raise ValueError("packagedefinition failed CRC or roundtrip")

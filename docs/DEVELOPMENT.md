@@ -46,3 +46,21 @@ Analiza plików z `smpl` dekoduje pojedynczy fizyczny przebieg przez `vgmstream 
 Kod i dokumentacja trafiają do Gita. Gotowe paczki są oddzielnymi załącznikami Releases i wymagają uprzedniego audytu praw oraz zawartości. Historia produkcji, wyodrębnione dialogi, audio, konta, cache i backupy pozostają poza repozytorium.
 
 Przed commitem uruchom `python tools/check_repository.py --staged`. Ustaw autorstwo i adres GitHub noreply lokalnie dla repozytorium; sprawdź także metadane commita przed wysłaniem.
+# Budowa paczki dla odbiorcy
+
+Z działającego lokalnego pakietu kampanii można zbudować dane dla instalatora:
+
+```powershell
+python tools/build_release.py --bundle "ścieżka/do/bundle.json" --game-root "folder gry" --output "dist/mod-data.zip" --version 0.9.0-rc1
+```
+
+Komendę sprawdzono na pełnym lokalnym pakiecie 46 304 zasobów: wszystkie końcowe WEM-y i różnice DLGE odtworzono i porównano. Publiczny builder nie wymaga prywatnego ledgera ani konta TTS. Odmawia zastąpienia istniejącego pliku wydania. Wymaga uprzednio zwalidowanego bundla i zgodnych oryginałów gry.
+
+Binarny instalator Windows można zbudować z publicznego punktu wejścia:
+
+```powershell
+python -m pip install -r requirements-build.txt
+python -m PyInstaller --noconfirm --clean --onefile --console --name 007-First-Light-PL-Setup --paths . --exclude-module dub007.deployment --exclude-module dub007.campaign --exclude-module dub007.tts --exclude-module fontTools --exclude-module numpy --exclude-module tkinter tools/run_release.py
+```
+
+Gotowy EXE, `mod-data.zip`, instrukcję, wrappery i właściwe licencje umieszcza się w jednym katalogu. Przed pakowaniem należy wykonać test instalacji i rollbacku przez rzeczywisty EXE; test samego kodu nie wystarcza. Pliki binarne, audio oraz paczki wydania pozostają poza Git. Wymagania publikacji opisuje [RELEASE_PUBLICATION.md](RELEASE_PUBLICATION.md).
